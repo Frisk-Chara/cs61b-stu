@@ -179,7 +179,8 @@ public class Model {
             if(stored_tile[i] == null) null_num++;
         }
         if (null_num == stored_tile.length - 1) {
-            board.move(x, board.size() - 1, currTile);
+                board.move(x, board.size() - 1, currTile);
+
         } else {
             for(int i = stored_tile.length - 1; i >= 0; i--){
                 if(stored_tile[i] != null) {
@@ -206,7 +207,11 @@ public class Model {
      * so we are tilting the tiles in this column up.
      * */
     public void tiltColumn(int x) {
-        // TODO: Task 7. Fill in this function.
+        for(int i = board.size() - 1; i >= 0 ; i--){
+            if(board.tile(x, i) != null) {
+                this.moveTileUpAsFarAsPossible(x, i);
+            }
+        }
     }
 
     public void tilt(Side side) {
