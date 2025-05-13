@@ -123,8 +123,32 @@ public class Model {
      * 2. There are two adjacent tiles with the same value.
      */
     public boolean atLeastOneMoveExists() {
-        // TODO: Fill in this function.
+        int current_size = board.size();
+        for (int x = 0; x < current_size; x++) {
+            for (int y = 0; y < current_size; y++) {
+                if (board.tile(x, y) == null) {
+                    return true;
+                }
+            }
+        }
+
+        for (int x = 0; x < current_size; x++) {
+            for (int y = 0; y < current_size; y++) {
+                int up = 9999, down = 9999, left = 9999, right = 9999;
+                if (x - 1 >= 0) down = board.tile(x - 1, y).value();
+                if (y - 1 >= 0) left = board.tile(x, y - 1).value();
+                if (x + 1 <= current_size - 1) up = board.tile(x + 1, y ).value();
+                if (y + 1 <= current_size - 1) right = board.tile(x, y + 1).value();
+                int[] value_check = new int[]{up, down, right, left};
+                for (int j : value_check) {
+                    if (board.tile(x, y).value() == j) {
+                        return true;
+                    }
+                }
+            }
+        }
         return false;
+
     }
 
     /**
