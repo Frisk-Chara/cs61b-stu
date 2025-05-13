@@ -192,6 +192,7 @@ public class Model {
             }
             if (myValue == anotherValue) {
                 board.move(x, board.size() - 1, currTile);
+                board.tile(x, board.size() - 1).wasMerged();
             } else {
                 board.move(x, board.size() - 2, currTile);
             }
