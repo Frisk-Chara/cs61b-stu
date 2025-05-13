@@ -169,7 +169,30 @@ public class Model {
         Tile currTile = board.tile(x, y);
         int myValue = currTile.value();
         int targetY = y;
-
+        Tile[] stored_tile= new Tile[board.size() - targetY];
+        int null_num = 0;
+        int anotherValue = 0;
+        for(int i = 0; i < stored_tile.length; i++){
+            stored_tile[i] = board.tile(x, i + targetY);
+        }
+        for(int i = stored_tile.length - 1; i >= 0; i--){
+            if(stored_tile[i] == null) null_num++;
+        }
+        if (null_num == stored_tile.length - 1) {
+            board.move(x, board.size() - 1, currTile);
+        } else {
+            for(int i = stored_tile.length - 1; i >= 0; i--){
+                if(stored_tile[i] != null) {
+                    board.move(x, board.size() - 1, stored_tile[i]);
+                    anotherValue = stored_tile[i].value();
+                }
+            }
+            if (myValue == anotherValue) {
+                board.move(x, board.size() - 1, currTile);
+            } else if (myValue != anotherValue) {
+                board.move(x, board.size() - 2, currTile);
+            }
+        }
         // TODO: Tasks 5, 6, and 10. Fill in this function.
     }
 
