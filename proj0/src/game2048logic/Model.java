@@ -183,13 +183,16 @@ public class Model {
         } else {
             for(int i = stored_tile.length - 1; i >= 0; i--){
                 if(stored_tile[i] != null) {
-                    board.move(x, board.size() - 1, stored_tile[i]);
+                    if(i != stored_tile.length -1) {
+                        board.move(x, board.size() - 1, stored_tile[i]);
+                    }
                     anotherValue = stored_tile[i].value();
+                    break;
                 }
             }
             if (myValue == anotherValue) {
                 board.move(x, board.size() - 1, currTile);
-            } else if (myValue != anotherValue) {
+            } else {
                 board.move(x, board.size() - 2, currTile);
             }
         }
