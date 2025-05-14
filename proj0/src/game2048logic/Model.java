@@ -183,7 +183,7 @@ public class Model {
             if (null_num != 0){
                 board.move(x, board.size() - 1, currTile);
             }
-        } else {
+        } else{
             for(int i = stored_tile.length - 1; i >= 0; i--){
                 if(stored_tile[i] != null) {
                     if(i != stored_tile.length -1) {
@@ -195,11 +195,20 @@ public class Model {
                 }
             }
             if (myValue == anotherValue) {
-                board.move(x, targetY + place_up, currTile);
-                board.tile(x, targetY + place_up).wasMerged();
+                if (board.tile(x, targetY + place_up - 1) == null ) {
+                    board.move(x, targetY + place_up, currTile);
+                } else if (board.tile(x, targetY + place_up - 1) != null && board.tile(x, targetY + place_up - 1).value() == myValue) {
+                    board.move(x, targetY + place_up, currTile);
+                }
             } else {
-                board.move(x, targetY + place_up - 1, currTile);
+                if (place_up != 1) {
+                    board.move(x, targetY + place_up - 1, currTile);
+                }
             }
+
+        }
+        if(stored_tile.length == board.size() && board.tile(x, targetY) != null && board.tile(x, targetY + 1) == null){
+            board.move(x, targetY + 1, currTile);
         }
         // TODO: Tasks 5, 6, and 10. Fill in this function.
     }
@@ -210,7 +219,7 @@ public class Model {
      * so we are tilting the tiles in this column up.
      * */
     public void tiltColumn(int x) {
-        for(int i = board.size() - 1; i >= 0 ; i--){
+        for(int i = board.size() - 1; i >= 0; i--){
             if(board.tile(x, i) != null) {
                 this.moveTileUpAsFarAsPossible(x, i);
             }
@@ -218,9 +227,11 @@ public class Model {
     }
 
     public void tilt(Side side) {
+        board.setViewingPerspective(side);
         for (int i = 0; i < board.size(); i++){
             this.tiltColumn(i);
         }
+        board.setViewingPerspective(Side.NORTH);
     }
 
     /** Tilts every column of the board toward SIDE.
