@@ -172,6 +172,7 @@ public class Model {
         Tile[] stored_tile= new Tile[board.size() - targetY];
         int null_num = 0;
         int anotherValue = 0;
+        int place_up = 0;
         for(int i = 0; i < stored_tile.length; i++){
             stored_tile[i] = board.tile(x, i + targetY);
         }
@@ -188,14 +189,15 @@ public class Model {
                         board.move(x, board.size() - 1, stored_tile[i]);
                     }
                     anotherValue = stored_tile[i].value();
+                    place_up = i;
                     break;
                 }
             }
             if (myValue == anotherValue) {
-                board.move(x, board.size() - 1, currTile);
-                board.tile(x, board.size() - 1).wasMerged();
+                board.move(x, targetY + place_up, currTile);
+                board.tile(x, targetY + place_up).wasMerged();
             } else {
-                board.move(x, board.size() - 2, currTile);
+                board.move(x, targetY + place_up - 1, currTile);
             }
         }
         // TODO: Tasks 5, 6, and 10. Fill in this function.
