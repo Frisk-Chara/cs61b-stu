@@ -180,8 +180,9 @@ public class Model {
             if(stored_tile[i] == null) null_num++;
         }
         if (null_num == stored_tile.length - 1) {
+            if (null_num != 0){
                 board.move(x, board.size() - 1, currTile);
-
+            }
         } else {
             for(int i = stored_tile.length - 1; i >= 0; i--){
                 if(stored_tile[i] != null) {
@@ -217,7 +218,9 @@ public class Model {
     }
 
     public void tilt(Side side) {
-        // TODO: Tasks 8 and 9. Fill in this function.
+        for (int i = 0; i < board.size(); i++){
+            this.tiltColumn(i);
+        }
     }
 
     /** Tilts every column of the board toward SIDE.
