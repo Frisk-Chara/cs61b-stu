@@ -166,52 +166,45 @@ public class Model {
      *    and the trailing tile does not.
      */
     public void moveTileUpAsFarAsPossible(int x, int y) {
-        Tile currTile = board.tile(x, y);
-        int myValue = currTile.value();
-        int targetY = y;
-        Tile[] stored_tile= new Tile[board.size() - targetY];
-        int null_num = 0;
-        int anotherValue = 0;
-        int place_up = 0;
-        for(int i = 0; i < stored_tile.length; i++){
-            stored_tile[i] = board.tile(x, i + targetY);
+        // 确保当前位置有瓷砖
+        if (board.tile(x, y) == null) {
+            return;
         }
-        for(int i = stored_tile.length - 1; i >= 0; i--){
-            if(stored_tile[i] == null) null_num++;
-        }
-        if (null_num == stored_tile.length - 1) {
-            if (null_num != 0){
-                board.move(x, board.size() - 1, currTile);
-            }
-        } else{
-            for(int i = stored_tile.length - 1; i >= 0; i--){
-                if(stored_tile[i] != null) {
-                    if(i != stored_tile.length -1) {
-                        board.move(x, board.size() - 1, stored_tile[i]);
-                    }
-                    anotherValue = stored_tile[i].value();
-                    place_up = i;
-                    break;
-                }
-            }
-            if (myValue == anotherValue) {
-                if (board.tile(x, targetY + place_up - 1) == null ) {
-                    board.move(x, targetY + place_up, currTile);
-                } else if (board.tile(x, targetY + place_up - 1) != null && board.tile(x, targetY + place_up - 1).value() == myValue) {
-                    board.move(x, targetY + place_up, currTile);
-                }
-            } else {
-                if (place_up != 1) {
-                    board.move(x, targetY + place_up - 1, currTile);
-                }
-            }
 
+        Tile currTile = board.tile(x, y);
+        int currValue = currTile.value();
+
+        // 找到可以移动到的最远空位置
+        int destY = y;
+        while (destY + 1 < board.size() && board.tile(x, destY + 1) == null) {
+            destY++;
         }
-        if(stored_tile.length == board.size() && board.tile(x, targetY) != null && board.tile(x, targetY + 1) == null){
-            board.move(x, targetY + 1, currTile);
+
+        // 检查是否可以与上方的瓷砖合并
+        if (destY + 1 < board.size()) {
+            Tile aboveTile = board.tile(x, destY + 1);
+
+            // 只有当值相等时才合并
+            if (aboveTile != null && aboveTile.value() == currValue && !board.tile(x, destY + 1).wasMerged()) {
+                board.move(x, destY + 1, currTile);
+
+                this.score += currValue * 2;
+            } else {
+                // 值不相等，只移动到最远空位置
+                if (destY != y) {
+                    board.move(x, destY, currTile);
+                }
+            }
+        } else {
+            // 没有上方瓷砖，只移动到最远空位置
+            if (destY != y) {
+                board.move(x, destY, currTile);
+            }
         }
-        // TODO: Tasks 5, 6, and 10. Fill in this function.
     }
+
+        // TODO: Tasks 5, 6, and 10. Fill in this function.
+
 
     /** Handles the movements of the tilt in column x of the board
      * by moving every tile in the column as far up as possible.
