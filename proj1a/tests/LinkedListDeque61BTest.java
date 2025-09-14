@@ -55,6 +55,73 @@ public class LinkedListDeque61BTest {
 
          assertThat(lld1.toList()).containsExactly(-2, -1, 0, 1, 2).inOrder();
      }
+     @Test
+    public void EmptyTest() {
+         Deque61B<Integer> lld1 = new LinkedListDeque61B<>();
+         Deque61B<Integer> lld2 = new LinkedListDeque61B<>();
+
+         lld1.addFirst(1); //size = 1, not empty
+         lld1.addFirst(2); // size = 2, not empty
+
+         assertThat(lld1.isEmpty()).isEqualTo(false);
+         assertThat(lld2.isEmpty()).isEqualTo(true);
+     }
+
+     @Test
+    public void SizeTest() {
+         Deque61B<Integer> lld1 = new LinkedListDeque61B<>();
+         Deque61B<Integer> lld2 = new LinkedListDeque61B<>();
+
+         lld1.addFirst(1); //size = 1
+         lld1.addFirst(2); //size = 2
+         lld1.addFirst(3); //size = 3
+
+         assertThat(lld1.size()).isEqualTo(3);
+         assertThat(lld2.size()).isEqualTo(0);
+     }
+
+     @Test
+    public void getTest() {
+         Deque61B<Integer> lld1 = new LinkedListDeque61B<>();
+         Deque61B<Integer> lld2 = new LinkedListDeque61B<>();
+
+         lld1.addFirst(1); //[1]
+         lld1.addFirst(4); //[4, 1]
+         lld1.addFirst(6); //[6, 4, 1]
+         lld1.addLast(5); // [6, 4, 1, 5]
+
+         assertThat(lld1.get(0)).isEqualTo(6);
+         assertThat(lld1.get(1)).isEqualTo(4);
+         assertThat(lld1.get(2)).isEqualTo(1);
+         assertThat(lld1.get(3)).isEqualTo(5);
+         assertThat(lld1.get(-1)).isEqualTo(null);
+         assertThat(lld1.get(10086)).isEqualTo(null);
+         assertThat(lld2.get(0)).isEqualTo(null);
+         assertThat(lld2.get(-2)).isEqualTo(null);
+         assertThat(lld2.get(6)).isEqualTo(null);
+     }
+
+    @Test
+    public void getRecursiveTest() {
+        Deque61B<Integer> lld1 = new LinkedListDeque61B<>();
+        Deque61B<Integer> lld2 = new LinkedListDeque61B<>();
+
+        lld1.addFirst(1); //[1]
+        lld1.addFirst(4); //[4, 1]
+        lld1.addFirst(6); //[6, 4, 1]
+        lld1.addLast(5); // [6, 4, 1, 5]
+
+        assertThat(lld1.getRecursive(0)).isEqualTo(6);
+        assertThat(lld1.getRecursive(1)).isEqualTo(4);
+        assertThat(lld1.getRecursive(2)).isEqualTo(1);
+        assertThat(lld1.getRecursive(3)).isEqualTo(5);
+        assertThat(lld1.getRecursive(-1)).isEqualTo(null);
+        assertThat(lld1.getRecursive(10086)).isEqualTo(null);
+        assertThat(lld2.getRecursive(0)).isEqualTo(null);
+        assertThat(lld2.getRecursive(-2)).isEqualTo(null);
+        assertThat(lld2.getRecursive(6)).isEqualTo(null);
+    }
 
     // Below, you'll write your own tests for LinkedListDeque61B.
 }
+
