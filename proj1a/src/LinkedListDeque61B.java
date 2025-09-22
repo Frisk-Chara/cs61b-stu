@@ -14,6 +14,14 @@ public class LinkedListDeque61B<T> implements Deque61B<T> {
             this.pre = pre;
             this.next = next;
         }
+
+        private T getRecursiveHelper(Node p, int index) {
+            if (index == 0) {
+                return p.item;
+            } else {
+                return getRecursiveHelper(p.next, index - 1);
+            }
+        }
     }
     /**声明虚拟头节点*/
     private Node sentinel;
@@ -70,15 +78,25 @@ public class LinkedListDeque61B<T> implements Deque61B<T> {
     public int size() {
         return this.size;
     }
-
+    /**删除第一个节点，虚拟头节点的下一节点指向第二节点，第二节点的前一节点指向虚拟头节点*/
     @Override
     public T removeFirst() {
-        return null;
+        if (size == 0) return null;
+        T temp = sentinel.next.item;
+        sentinel.next.next.pre = sentinel;
+        sentinel.next = sentinel.next.next;
+        size -= 1;
+        return temp;
     }
-
+    /**删除最后一个节点，虚拟头节点的前一节点指向倒数第二个节点，倒数第二节点的后一节点指向虚拟头节点*/
     @Override
     public T removeLast() {
-        return null;
+        if (size == 0) return null;
+        T temp = sentinel.pre.item;
+        sentinel.pre.pre.next = sentinel;
+        sentinel.pre = sentinel.pre.pre;
+        size -= 1;
+        return temp;
     }
 
     @Override
@@ -96,8 +114,14 @@ public class LinkedListDeque61B<T> implements Deque61B<T> {
         return n;
     }
 
+
+
     @Override
     public T getRecursive(int index) {
-        return null;
+        if (index < 0 || index >= size) {
+            return null;
+        } else {
+            return sentinel.getRecursiveHelper(sentinel.next, index);
+        }
     }
 }

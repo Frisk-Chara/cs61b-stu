@@ -122,6 +122,44 @@ public class LinkedListDeque61BTest {
         assertThat(lld2.getRecursive(6)).isEqualTo(null);
     }
 
+    @Test
+    public void removeFirstTest() {
+        Deque61B<Integer> lld1 = new LinkedListDeque61B<>();
+
+        lld1.addFirst(1); //[1]
+        lld1.addFirst(4); //[4, 1]
+        lld1.addFirst(6); //[6, 4, 1]
+        lld1.addLast(5); // [6, 4, 1, 5]
+        assertThat(lld1.removeFirst()).isEqualTo(6); //[4, 1, 5]
+        assertThat(lld1.toList()).containsExactly(4, 1, 5).inOrder();
+        assertThat(lld1.removeFirst()).isEqualTo(4); //[1, 5]
+        assertThat(lld1.toList()).containsExactly(1, 5).inOrder();
+        assertThat(lld1.removeFirst()).isEqualTo(1); //[5]
+        assertThat(lld1.toList()).containsExactly(5).inOrder();
+        assertThat(lld1.removeFirst()).isEqualTo(5); //[]
+        assertThat(lld1.toList()).containsExactly().inOrder();
+        assertThat(lld1.removeFirst()).isEqualTo(null);
+    }
+
+    @Test
+    public void removeLastTest() {
+        Deque61B<Integer> lld1 = new LinkedListDeque61B<>();
+
+        lld1.addFirst(1); //[1]
+        lld1.addFirst(4); //[4, 1]
+        lld1.addFirst(6); //[6, 4, 1]
+        lld1.addLast(5); // [6, 4, 1, 5]
+        assertThat(lld1.removeLast()).isEqualTo(5); //[6, 4, 1]
+        assertThat(lld1.toList()).containsExactly(6, 4, 1).inOrder();
+        assertThat(lld1.removeLast()).isEqualTo(1); //[6, 4]
+        assertThat(lld1.toList()).containsExactly(6, 4).inOrder();
+        assertThat(lld1.removeLast()).isEqualTo(4); //[6]
+        assertThat(lld1.toList()).containsExactly(6).inOrder();
+        assertThat(lld1.removeLast()).isEqualTo(6); //[]
+        assertThat(lld1.toList()).containsExactly().inOrder();
+        assertThat(lld1.removeLast()).isEqualTo(null);
+    }
+
     // Below, you'll write your own tests for LinkedListDeque61B.
 }
 
