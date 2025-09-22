@@ -8,10 +8,10 @@ import static com.google.common.truth.Truth.assertWithMessage;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LinkedListDeque61BTest {
+public class ArrayDeque61BTest {
     @Test
     public void InteratorTest() {
-        Deque61B<Integer> D1 = new LinkedListDeque61B<>();
+        Deque61B<Integer> D1 = new ArrayDeque61B<>();
         List<Integer> L1 = new ArrayList<>();
         D1.addFirst(1);//[1]
         D1.addLast(5);//[1, 5]
@@ -23,7 +23,7 @@ public class LinkedListDeque61BTest {
 
     @Test
     public void toStringTest() {
-        Deque61B<String> D1 = new LinkedListDeque61B<>();
+        Deque61B<String> D1 = new ArrayDeque61B<>();
         D1.addLast("First");
         D1.addLast("Middle");
         D1.addLast("Last");//[First, Middle, Last]
