@@ -34,7 +34,9 @@ public class TimeSeries extends TreeMap<Integer, Double> {
     public TimeSeries(TimeSeries ts, int startYear, int endYear) {
         super();
         for (int i = startYear; i <= endYear; i++) {
-            this.put(i, ts.get(i));
+            if (ts.containsKey(i)){
+                this.put(i, ts.get(i));
+            }
         }
 
     }
